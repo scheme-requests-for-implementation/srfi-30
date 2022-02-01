@@ -1,33 +1,30 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html lang="en">
   <head>
     <title>SRFI 30: Nested Multi-line Comments</title>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="/srfi.css" type="text/css" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <link href="https://srfi.schemers.org/srfi.css" rel="stylesheet" type="text/css" />
+    <link href="/favicon.png" rel="icon" sizes="192x192" type="image/png" />
   </head>
 
   <body>
 
-<H1>Title</H1>
+<h1><a href="https://srfi.schemers.org/"><img alt="SRFI surfboard logo" class="srfi-logo" src="https://srfi.schemers.org/srfi-logo.svg" /></a>30: Nested Multi-line Comments</h1>
 
-Nested Multi-line Comments
-
-<H1>Author</H1>
-
-Martin Gasbichler
+<p>by Martin Gasbichler</p>
     
-<H1>Status</H1>
+<h2>Status</h2>
 
 <p>This SRFI is currently in <em>final</em> status.  Here is <a href="https://srfi.schemers.org/srfi-process.html">an explanation</a> of each status that a SRFI can hold.  To provide input on this SRFI, please send email to <code><a href="mailto:srfi+minus+30+at+srfi+dotschemers+dot+org">srfi-30@<span class="antispam">nospam</span>srfi.schemers.org</a></code>.  To subscribe to the list, follow <a href="https://srfi.schemers.org/srfi-list-subscribe.html">these instructions</a>.  You can access previous messages via the mailing list <a href="https://srfi-email.schemers.org/srfi-30">archive</a>.</p>
 
-<UL>
-      <LI>Draft: 2002-04-12--2002-06-10</LI>
+<ul>
+      <li>Draft: 2002-04-12--2002-06-10</li>
       <li>Revised: 2002-06-05</li>
       <li>Final: 2002-08-07</li>
-</UL>
+</ul>
 
-    <h1>Related SRFIs</h1>
+    <h2>Related SRFIs</h2>
     
     <p><a href="https://srfi.schemers.org/srfi-22/">SRFI 22</a> defines
     a multi line comment that may only appear at the beginning of a
@@ -36,16 +33,16 @@ Martin Gasbichler
     <p><a href="https://srfi.schemers.org/srfi-10/">SRFI 10</a>
     proposes the notation
 
-    <PRE> "#" &lt;discriminator&gt; &lt;other-char&gt;*</PRE> for further
+    <pre> "#" &lt;discriminator&gt; &lt;other-char&gt;*</pre> for further
     SRFIs that introduce values which may be read and written.</p>
 
-    <H1>Abstract</H1>
+    <h2>Abstract</h2>
 
     <p>This SRFI extends R5RS by possibly nested, multi-line
     comments. Multi-line comments start with <code>#|</code> and end
     with <code>|#</code>.</p>
     
-    <H1>Rationale</H1>
+    <h2>Rationale</h2>
     
     <p>Multi-line comments are common to many programming languages. They
     provide a convenient mean for adding blocks of text inside a program and
@@ -58,10 +55,9 @@ Martin Gasbichler
     with R5RS. Nested comments are an important feature for
     incrementally commenting out code.</p>
     
-    <H1>Specification</H1>
+    <h2 id="spec">Specification</h2>
 
-    <p>This SRFI extends the specification of comments -- <a
-    href="http://www.schemers.org/Documents/Standards/R5RS/HTML/r5rs-Z-H-5.html#%_sec_2.2">R5RS
+    <p>This SRFI extends the specification of comments -- <a href="http://www.schemers.org/Documents/Standards/R5RS/HTML/r5rs-Z-H-5.html#%25_sec_2.2">R5RS
     section 2.2</a> -- as follows:</p>
 
     <p>The sequence <code>#|</code> indicates the start of a
@@ -75,8 +71,7 @@ Martin Gasbichler
     
     <p>This SRFI furthermore extends the production for
     <code>&lt;comment&gt;</code> in the specification of lexical
-    structure -- <a
-    href="http://www.schemers.org/Documents/Standards/R5RS/HTML/r5rs-Z-H-10.html#%_sec_7.1.1">R5RS
+    structure -- <a href="http://www.schemers.org/Documents/Standards/R5RS/HTML/r5rs-Z-H-10.html#%25_sec_7.1.1">R5RS
     section 7.1.1</a> -- to:
     </p>
     <pre>
@@ -88,11 +83,10 @@ Martin Gasbichler
     </pre>
 
 
-    <h1><code>&lt;delimiter&gt;</code> and <code>#</code></h1> 
+    <h2><code>&lt;delimiter&gt;</code> and <code>#</code></h2>
 
     <p>The SRFI does not extend the specification of
-    <code>&lt;delimiter&gt;</code> from <a
-    href="http://www.schemers.org/Documents/Standards/R5RS/HTML/r5rs-Z-H-10.html#%_sec_7.1.1">R5RS
+    <code>&lt;delimiter&gt;</code> from <a href="http://www.schemers.org/Documents/Standards/R5RS/HTML/r5rs-Z-H-10.html#%25_sec_7.1.1">R5RS
     section 7.1.1</a>. It is therefore required to separate tokens
     which require implicit termination (identifiers, numbers,
     characters, and dot) from multi-line comments by a
@@ -103,7 +97,7 @@ Martin Gasbichler
     incompatible with existing implementations which allow
     <code>#</code> as legal character within identifiers.</p>
 
-    <H1>Implementation</H1>
+    <h2>Implementation</h2>
     
     <p>The following procedure <code>skip-comment</code> deletes a
     leading multi-line comment from the current input port. Its
@@ -130,7 +124,7 @@ Martin Gasbichler
 		 ((#\#) (lp 'read-sharp nested-level))
 		 (else (lp 'start nested-level))))
       ((read-bar) (case (next-char)
-		    ((#\#) (if (> nested-level 1)
+		    ((#\#) (if (&gt; nested-level 1)
 			       (lp 'start (- nested-level 1))))
 		    (else (lp 'start nested-level))))
       ((read-sharp) (case (next-char)
@@ -141,15 +135,13 @@ Martin Gasbichler
     <p>A <a href="https://srfi.schemers.org/srfi-22/">SRFI 22</a> script to remove nested multi-line comments is
     available at 
       
-      <a
-	 href="remove-srfi30-comments-script.scm">https://srfi.schemers.org/srfi-30/remove-srfi30-comments-script.scm</a>.
+      <a href="remove-srfi30-comments-script.scm">https://srfi.schemers.org/srfi-30/remove-srfi30-comments-script.scm</a>.
       
       The script will read a Scheme program containing nested
       multi-line comments from standard input and emit the same
       programs with the comments removed to standard output. The
       script mimics the Scheme 48 reader and uses the
-      <code>error</code> procedure from <a
-      href="https://srfi.schemers.org/srfi-23/">SRFI 23</a>.</p>
+      <code>error</code> procedure from <a href="https://srfi.schemers.org/srfi-23/">SRFI 23</a>.</p>
 
      <p>A number of Scheme implemenations already support this SRFI:
      Chez Scheme, Chicken, Gambit-C, Kawa, MIT Scheme, MzScheme and
@@ -158,7 +150,7 @@ Martin Gasbichler
      implementations, Scheme 48 and Guile do not support this SRFI
      yet.</p>
 
-    <H1>Copyright</H1>
+    <h2>Copyright</h2>
     <p>Copyright (C) Martin Gasbichler (2002). All Rights Reserved.</p>
 
     <p>
@@ -186,9 +178,8 @@ Martin Gasbichler
     </p>
 
       
-    <hr>
-    <address>Editor: <a
-    href="mailto:srfi minus editors at srfi dot schemers dot org">Mike Sperber</a></address>
+    <hr />
+    <address>Editor: <a href="mailto:srfi%20minus%20editors%20at%20srfi%20dot%20schemers%20dot%20org">Mike Sperber</a></address>
 <!-- Created: Tue Sep 29 19:20:08 EDT 1998 -->
 <!-- hhmts start -->
 Last modified: Sun Jan 28 13:40:31 MET 2007
